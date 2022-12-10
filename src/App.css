@@ -1,0 +1,73 @@
+:root,
+body {
+  background-color: #6667ab;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.app {
+  font-family: sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.date {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  background-color: white;
+  min-width: max(300px, calc((100vw - 20vw) / 7));
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+
+.date main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+.next {
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.time {
+  color: blue;
+  font-weight: 600;
+}
+.date header {
+  display: inline-flex;
+  align-items: center;
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.date header span {
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.date header span.weekend {
+  background-color: salmon;
+  border: 1px solid salmon;
+}
+
+.place a {
+  color: blue;
+}
