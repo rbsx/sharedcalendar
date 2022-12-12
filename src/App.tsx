@@ -1,5 +1,5 @@
 import './App.css';
-import { data, TEvent } from './data/calendar';
+import { getEvents, TEvent } from './data/calendar';
 
 enum days {
   Saturday = 'Saturday',
@@ -36,23 +36,32 @@ const makeMinutes = (minutes: number) => {
 };
 
 const getDaysDiff = (eventBefore: TEvent, eventAfter?: TEvent) => {
+  let calculateTimeFrome = eventBefore.endTime;
+  let fromNow = false;
+
   if (!eventAfter) return null;
+  if (eventAfter.isPast && eventBefore.isPast) return null;
+  if (eventBefore.isPast && !eventAfter.isPast) {
+    calculateTimeFrome = new Date();
+    fromNow = true;
+  }
 
   // @ts-ignore
-  const numdiff = eventAfter.startTime - eventBefore.startTime;
-  const numdiffHours = numdiff / 1000 / 60 / 60;
+  const numdiff = eventAfter.startTime - calculateTimeFrome;
+  const numdiffHours = Math.round(numdiff / 1000 / 60 / 60);
   const hoursWODays = numdiffHours % 24;
 
   if (numdiffHours > 23) {
     return `${Math.round(numdiffHours / 24)} days ${
       hoursWODays > 0 ? hoursWODays + ' hours' : ''
-    }`;
+    } ${fromNow ? 'from now' : ''}`;
   }
 
-  return `${hoursWODays} hours`;
+  return `${hoursWODays} hours ${fromNow ? 'from now' : ''}`;
 };
 
 export default function App() {
+  const data = getEvents();
   return (
     <div className="app">
       {data.map((event, index) => {
@@ -61,7 +70,7 @@ export default function App() {
         const isWeekend = weekday in days ? true : false;
         return (
           <>
-            <section className="date">
+            <section className={`date ${event.isPast ? 'past' : ''}`}>
               <header>
                 {monthMap[event.startTime.getMonth()]}
                 &nbsp;

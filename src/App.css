@@ -28,6 +28,22 @@ body {
   align-items: flex-start;
 }
 
+.date.past {
+  background-color: lightgray;
+  border-color: lightgray;
+  box-shadow: 0px 3px 20px 0px;
+}
+
+.past .name,
+.past .time,
+.past .place a {
+  color: gray;
+}
+
+.past + .past {
+  margin-top: -90px;
+}
+
 .date main {
   display: flex;
   flex-direction: column;
