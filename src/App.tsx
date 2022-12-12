@@ -1,5 +1,5 @@
 import './App.css';
-import { getEvents, TEvent } from './data/calendar';
+import { clientDates, CEvent, getEvents, TEvent } from './data/calendar';
 
 enum days {
   Saturday = 'Saturday',
@@ -35,8 +35,8 @@ const makeMinutes = (minutes: number) => {
   return minutes < 10 ? `0${minutes}` : minutes;
 };
 
-const getDaysDiff = (eventBefore: TEvent, eventAfter?: TEvent) => {
-  let calculateTimeFrome = eventBefore.endTime;
+const getDaysDiff = (eventBefore: CEvent, eventAfter?: CEvent) => {
+  let calculateTimeFrome = eventBefore.endDate;
   let fromNow = false;
 
   if (!eventAfter) return null;
@@ -61,20 +61,20 @@ const getDaysDiff = (eventBefore: TEvent, eventAfter?: TEvent) => {
 };
 
 export default function App() {
-  const data = getEvents();
+  const data = clientDates;
   return (
     <div className="app">
       {data.map((event, index) => {
-        const weekday = weekdayMap[event.startTime.getDay()];
+        const weekday = weekdayMap[event.startDate.getDay()];
         const daydiffs = getDaysDiff(event, data[index + 1]);
         const isWeekend = weekday in days ? true : false;
         return (
           <>
             <section className={`date ${event.isPast ? 'past' : ''}`}>
               <header>
-                {monthMap[event.startTime.getMonth()]}
+                {monthMap[event.startDate.getMonth()]}
                 &nbsp;
-                {event.startTime.getDate()}
+                {event.startDate.getDate()}
                 &nbsp;
                 <span className={`${isWeekend ? 'weekend' : ''}`}>
                   {weekday}
@@ -82,12 +82,12 @@ export default function App() {
               </header>
               <main>
                 <span className="time">
-                  {event.startTime.getHours()}:
-                  {makeMinutes(event.startTime.getMinutes())} -&nbsp;
-                  {event.endTime.getHours()}:
-                  {makeMinutes(event.endTime.getMinutes())}
+                  {event.startDate.getHours()}:
+                  {makeMinutes(event.startDate.getMinutes())} -&nbsp;
+                  {event.endDate.getHours()}:
+                  {makeMinutes(event.endDate.getMinutes())}
                 </span>
-                <span className="name">{event.name}</span>
+                <span className="name">{event.eventName}</span>
                 <span className="place">
                   <a href={event.place.link}>{event.place.name}</a>
                 </span>
