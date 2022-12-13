@@ -31,6 +31,8 @@ export const AddEvent = () => {
     submitEvent.preventDefault();
   };
 
+  if (true) return null;
+
   return (
     <>
       <button>New Event</button>
