@@ -1,4 +1,6 @@
 import './App.css';
+import { AddEvent } from './components/add-event';
+import { EventList } from './components/event-list';
 import { clientDates, CEvent, getEvents, TEvent } from './data/calendar';
 
 enum days {
@@ -36,18 +38,18 @@ const makeMinutes = (minutes: number) => {
 };
 
 const getDaysDiff = (eventBefore: CEvent, eventAfter?: CEvent) => {
-  let calculateTimeFrome = eventBefore.endDate;
+  let calculateTimeFrom = eventBefore.endDate || eventBefore.startDate;
   let fromNow = false;
 
   if (!eventAfter) return null;
   if (eventAfter.isPast && eventBefore.isPast) return null;
   if (eventBefore.isPast && !eventAfter.isPast) {
-    calculateTimeFrome = new Date();
+    calculateTimeFrom = new Date();
     fromNow = true;
   }
 
   // @ts-ignore
-  const numdiff = eventAfter.startTime - calculateTimeFrome;
+  const numdiff = eventAfter.startDate - calculateTimeFrom;
   const numdiffHours = Math.round(numdiff / 1000 / 60 / 60);
   const hoursWODays = numdiffHours % 24;
 
@@ -64,6 +66,8 @@ export default function App() {
   const data = clientDates;
   return (
     <div className="app">
+      <AddEvent />
+      <EventList />
       {data.map((event, index) => {
         const weekday = weekdayMap[event.startDate.getDay()];
         const daydiffs = getDaysDiff(event, data[index + 1]);
